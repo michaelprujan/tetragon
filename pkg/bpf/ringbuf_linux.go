@@ -4,5 +4,5 @@
 package bpf
 
 var (
-	RingBufEventsMapName = "tg_rb_events"
+	RingBufEventsMapName = "process_events"
 )

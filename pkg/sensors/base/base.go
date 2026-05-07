@@ -25,7 +25,7 @@ import (
 
 const (
 	execveMapMaxEntries = 32768
-	RingBufMapName      = "tg_rb_events"
+	RingBufMapName      = "process_events"
 )
 
 var (

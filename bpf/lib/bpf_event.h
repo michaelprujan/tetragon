@@ -19,10 +19,18 @@ struct {
 #ifdef __V511_BPF_PROG
 // The ring buffer needs to have a size that is a multiple of a page size, and is a power of 2.
 // Zero isn't acceptable, so we arbitrarily choose 4K as that is a common/default page size.
+// struct {
+// 	__uint(type, BPF_MAP_TYPE_RINGBUF);
+// 	__uint(max_entries, 4096); // This will be resized in user space.
+// } tg_rb_events SEC(".maps");
+
 struct {
 	__uint(type, BPF_MAP_TYPE_RINGBUF);
-	__uint(max_entries, 4096); // This will be resized in user space.
-} tg_rb_events SEC(".maps");
+	__uint(max_entries, 4096);
+	__uint(pinning, 1); /* LIBBPF_PIN_BY_NAME */
+} process_events SEC(".maps");
+
+
 #endif
 
 #endif // __BPF_EVENT_H

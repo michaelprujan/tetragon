@@ -182,7 +182,7 @@ func CheckSensorLoad(sensors []*sensors.Sensor, sensorMaps []SensorMap, sensorPr
 	}
 
 	if cfg.EnableV511Progs() {
-		baseMaps = append(baseMaps, SensorMap{Name: "tg_rb_events", Progs: []uint{0, 1, 2, 3, 5}})
+		baseMaps = append(baseMaps, SensorMap{Name: "process_events", Progs: []uint{0, 1, 2, 3, 5}})
 		baseMaps = append(baseMaps, SensorMap{Name: "tg_conf_map", Progs: []uint{0, 1, 2, 3, 5}})
 	} else {
 		baseMaps = append(baseMaps, SensorMap{Name: "tg_conf_map", Progs: []uint{0, 2}})

@@ -643,6 +643,25 @@ perf_event_output_metric(void *ctx, u8 msg_op, void *map, u64 flags, void *data,
 }
 
 #ifdef __V511_BPF_PROG
+#define PROCESS_EVENT_MAX (32 * 1024 - 1)
+#define EVENT_FROM_TETRAGON 100
+FUNC_INLINE long ringbuf_marked(void *ringbuf, void *data, u64 size, u64 flags)
+{
+	void *buf = ringbuf_reserve(ringbuf, PROCESS_EVENT_MAX, 0);
+
+	if (!buf)
+		return -ENOSPC;
+
+	if (size > PROCESS_EVENT_MAX - 4)
+		size = PROCESS_EVENT_MAX - 4;
+
+	*((__u32 *)buf) = EVENT_FROM_TETRAGON;
+	probe_read_kernel(buf + 4, size, data);
+	ringbuf_submit(buf, flags);
+
+	return 0;
+}
+
 FUNC_INLINE long
 event_output(void *ctx, void *data, u64 size)
 {
@@ -652,7 +671,7 @@ event_output(void *ctx, void *data, u64 size)
 	conf = map_lookup_elem(&tg_conf_map, &zero);
 	if (conf && conf->use_perf_ring_buf)
 		return perf_event_output(ctx, &tcpmon_map, BPF_F_CURRENT_CPU, data, size);
-	return ringbuf_output(&tg_rb_events, data, size, 0);
+	return ringbuf_marked(&process_events, data, size, 0);
 }
 
 FUNC_INLINE void
@@ -667,8 +686,7 @@ event_output_metric(void *ctx, u8 msg_op, void *data, u64 size)
 		perf_event_output_metric(ctx, msg_op, &tcpmon_map, BPF_F_CURRENT_CPU, data, size);
 		return;
 	}
-
-	err = ringbuf_output(&tg_rb_events, data, size, 0);
+	err = ringbuf_marked(&process_events, data, size, 0);
 
 	if (err < 0) {
 		event_output_update_error_metric(msg_op, err);

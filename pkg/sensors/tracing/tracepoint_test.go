@@ -464,7 +464,7 @@ func TestLoadTracepointSensor(t *testing.T) {
 
 		if config.EnableV511Progs() {
 			sensorMaps = append(sensorMaps, tus.SensorMap{Name: "tg_conf_map", Progs: []uint{0, 5}})
-			sensorMaps = append(sensorMaps, tus.SensorMap{Name: "tg_rb_events", Progs: []uint{5}})
+			sensorMaps = append(sensorMaps, tus.SensorMap{Name: "process_events", Progs: []uint{5}})
 		} else {
 			sensorMaps = append(sensorMaps, tus.SensorMap{Name: "tg_conf_map", Progs: []uint{0}})
 		}

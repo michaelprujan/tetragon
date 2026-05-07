@@ -5031,7 +5031,7 @@ func TestLoadKprobeSensor(t *testing.T) {
 			{Name: "tcpmon_map", Progs: []uint{2, 6, 10}},
 
 			// generic_kprobe_process_event*,generic_kprobe_output,generic_retkprobe_output
-			{Name: "tg_rb_events", Progs: []uint{2, 6, 10}},
+			{Name: "process_events", Progs: []uint{2, 6, 10}},
 
 			// generic_kprobe_process_event*,generic_kprobe_actions,retkprobe
 			{Name: "socktrack_map", Progs: []uint{2, 5, 7, 9}},
@@ -5088,7 +5088,7 @@ func TestLoadKprobeSensor(t *testing.T) {
 
 			if config.EnableV511Progs() {
 				// generic_kprobe_process_event*,generic_kprobe_output,generic_retkprobe_output
-				sensorMaps = append(sensorMaps, tus.SensorMap{Name: "tg_rb_events", Progs: []uint{2, 6, 11}})
+				sensorMaps = append(sensorMaps, tus.SensorMap{Name: "process_events", Progs: []uint{2, 6, 11}})
 
 				// generic_kprobe_event
 				sensorMaps = append(sensorMaps, tus.SensorMap{Name: "tg_conf_map", Progs: []uint{0, 2, 6, 11}})

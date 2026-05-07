@@ -79,7 +79,7 @@ func TestLSMObjectLoad(t *testing.T) {
 
 			// generic_lsm_process_event*,generic_lsm_output
 			{Name: "tcpmon_map", Progs: []uint{2, 6}},
-			{Name: "tg_rb_events", Progs: []uint{2, 6}},
+			{Name: "process_events", Progs: []uint{2, 6}},
 		}
 	} else {
 		sensorProgs = []tus.SensorProg{
@@ -119,7 +119,7 @@ func TestLSMObjectLoad(t *testing.T) {
 		// generic_lsm_event
 		if config.EnableV511Progs() {
 			sensorMaps = append(sensorMaps, tus.SensorMap{Name: "tg_conf_map", Progs: []uint{0, 2, 6}})
-			sensorMaps = append(sensorMaps, tus.SensorMap{Name: "tg_rb_events", Progs: []uint{2, 6}})
+			sensorMaps = append(sensorMaps, tus.SensorMap{Name: "process_events", Progs: []uint{2, 6}})
 		} else {
 			sensorMaps = append(sensorMaps, tus.SensorMap{Name: "tg_conf_map", Progs: []uint{0}})
 		}
